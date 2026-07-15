@@ -1,15 +1,27 @@
 {
-  "name": "vivahaa-wedding-planner",
+  "name": "wedding-studio",
   "version": "1.0.0",
   "private": true,
-  "description": "vivahaa — a premium, bilingual (English/Hindi) wedding planning web app for Indian weddings. Vanilla HTML5/CSS3/ES6+, no build step required.",
   "scripts": {
-    "dev": "npx --yes serve -l 5000 .",
-    "start": "npx --yes serve -l 5000 ."
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "keywords": ["wedding", "planner", "india", "vanilla-js", "bilingual"],
-  "license": "UNLICENSED",
-  "engines": {
-    "node": ">=14"
+  "dependencies": {
+    "framer-motion": "^11.11.17",
+    "lucide-react": "^0.454.0",
+    "next": "14.2.15",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13",
+    "typescript": "^5.5.4"
   }
 }

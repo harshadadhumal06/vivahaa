@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #faf6ef;
+  color: #2b2620;
+}
+
+::selection {
+  background-color: #b8935f;
+  color: #faf6ef;
+}
+
+/* Thin custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #faf6ef;
+}
+::-webkit-scrollbar-thumb {
+  background: #d4b483;
+  border-radius: 999px;
+  border: 2px solid #faf6ef;
+}
+
+@layer utilities {
+  .text-outline-gold {
+    -webkit-text-stroke: 1px #b8935f;
+    color: transparent;
+  }
+
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .eyebrow {
+    @apply font-body text-[11px] md:text-xs tracking-widest2 uppercase text-gold-dark;
+  }
+
+  .divider-gold {
+    @apply h-px w-16 bg-gradient-to-r from-transparent via-gold to-transparent;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-forest px-8 py-3.5 font-body text-sm tracking-wide text-ivory transition-all duration-500 hover:bg-forest-light hover:shadow-soft hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-forest/30 bg-transparent px-8 py-3.5 font-body text-sm tracking-wide text-forest transition-all duration-500 hover:border-forest hover:bg-forest hover:text-ivory hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .card-lift {
+    @apply transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-soft;
+  }
+
+  .underline-grow {
+    position: relative;
+  }
+  .underline-grow::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 1px;
+    width: 0%;
+    background-color: currentColor;
+    transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .underline-grow:hover::after {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

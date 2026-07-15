@@ -1,213 +1,86 @@
-# vivahaa — Premium Wedding Planner (India) 🪔
+# Evermore & Co. — Wedding Planning Studio Website
 
-A modern, luxury-themed, fully responsive wedding-planning web app for Indian
-weddings — built in plain **HTML5, CSS3 and ES6+ JavaScript** with no
-framework, no build step, and no backend required to try it out.
+A fully responsive, animated single-page site built with **Next.js 14 (App Router)**, **TypeScript**, **Tailwind CSS**, and **Framer Motion** — a stack Vercel supports out of the box with zero configuration.
 
-Bilingual by design: every label, button, form and message switches between
-**English** and **Hindi** instantly, no page reload.
+## Sections
+Home · About · Services · Venues · Cuisine · Gallery · Packages · Contact — plus a sticky animated nav and footer. (Packages sits directly above Contact by design, so pricing leads straight into the enquiry form.)
 
----
+## Regional Wedding Cuisine Section
+`components/Cuisine.tsx` + `data/indiaCuisine.ts` cover all 24 states/UTs in the venue dataset, each with 5 real signature dishes (veg/non-veg tagged), a wedding-feast tradition note, and a diet profile. Filterable by region and state, same UX pattern as Venues.
 
-## ✨ Features
+**Photography honesty:** dishes marked "Real dish photo" link to genuine Wikimedia Commons photography — either of that exact dish (Hyderabadi biryani, Gujarati dhokla, dal baati churma, rosogolla, masala dosa, Kerala sadya) or a real regional-style thali reused honestly across a few neighbouring states with a similar thali tradition (noted in each entry's `sourceNote`). States without that badge use representative stock photography of the cuisine style, not a confirmed photo of that state's actual food — swap in real photography whenever you have it, using the same `StateCuisine` shape.
 
-- **12 pages**: Home, About, Services, Packages, Venues, Vendors, Gallery,
-  Contact, Login, Register, Dashboard, and a 10‑step **Plan My Wedding**
-  wizard.
-- **Bilingual UI** (English / Hindi) via `locales/en.json` & `locales/hi.json`,
-  swapped live with a `data-i18n` attribute system — no reload, no framework.
-- **Live budget calculator** — the planner wizard totals your estimated
-  wedding cost in real time as you pick venue, food, decor, music,
-  photography, bridal services, invitations and guest count.
-- **Customer dashboard** — Overview, Profile, Saved Plans, Bookings,
-  Wishlist, Budget Summary, Notifications, Settings.
-- **Search & filter** on Venues (city / type / capacity / keyword) and
-  Vendors (category tabs / city / keyword).
-- **Wishlist** (heart icon) that works across venues, vendors and the
-  dashboard, persisted in `localStorage`.
-- **Light / dark mode**, persisted and respecting the OS preference on first
-  visit.
-- **Glassmorphism** search card & testimonials, soft shadows, rounded
-  corners, scroll-reveal animations, a signature "toran" (marigold-garland)
-  divider motif between sections.
-- **Form validation** (contact, login, register, planner) with inline error
-  messages, and **toast notifications** for every action.
-- **Demo authentication** — register/login backed by `localStorage` so the
-  whole flow works with zero backend. See [Demo login](#demo-login) below.
+## Design
+"Botanical Editorial" identity: deep forest green, ivory, antique gold, and dusty rose; Cormorant Garamond (display serif) paired with Jost (body sans); a hand-drawn vine motif that draws itself in on scroll as the page's signature element.
 
-## 🧱 Tech stack
-
-Plain HTML5 / CSS3 (Flexbox + Grid) / modern JavaScript (ES6+). No React, no
-build tooling, no bundler. Icons via Font Awesome (CDN), fonts via Google
-Fonts (CDN) — both loaded at runtime by the browser, not part of the
-repository.
-
-## 📁 Project structure
-
-```
-vivahaa/
-├── index.html            Home
-├── about.html
-├── services.html
-├── packages.html
-├── venues.html
-├── vendors.html
-├── gallery.html
-├── contact.html
-├── login.html
-├── register.html
-├── dashboard.html
-├── planner.html           "Plan My Wedding" wizard
-├── css/
-│   ├── variables.css       Design tokens (colours, type scale, spacing, shadows)
-│   ├── main.css            Components & layout
-│   └── responsive.css      Breakpoints
-├── js/
-│   ├── i18n.js              Translation engine (fetches /locales/*.json)
-│   ├── main.js               App shell: header/footer, theme, toasts, wishlist
-│   ├── data.js                Sample venues/vendors/testimonials/gallery/costs
-│   ├── auth.js                 Demo register/login/session (localStorage)
-│   ├── forms.js                 Shared client-side validation
-│   ├── planner.js                Wizard steps + live budget engine
-│   ├── dashboard.js                Dashboard tabs & rendering
-│   ├── listings.js                 Venues & Vendors search/filter/modal
-│   ├── gallery.js                   Gallery filter + lightbox
-│   └── home.js                      Homepage dynamic sections
-├── locales/
-│   ├── en.json             English strings
-│   └── hi.json             Hindi strings (same key structure as en.json)
-├── assets/
-│   └── favicon.svg
-├── vercel.json
-├── package.json
-└── README.md
-```
-
-Icons use the Font Awesome CDN rather than a local icon set, and the brand
-mark is an inline SVG in `js/main.js` — so there's no separate `/icons`
-folder to maintain.
-
-## 🖼️ About the imagery
-
-Every "photo" slot in this build (hero banners, venue/vendor cards, gallery,
-decoration styles) is a **hand-built inline SVG illustration** — a mandap
-arch, a palace silhouette, a camera and film reel, a henna-patterned hand,
-and so on — rather than a hot-linked stock photo. That was a deliberate
-choice, not a placeholder-in-progress:
-
-- **It's guaranteed to render.** There's no external image host to go
-  down, get rate-limited, or 404.
-- **It's fast.** Each illustration is a few hundred bytes of inline SVG —
-  no image requests at all.
-- **It's on-brand.** Every scene uses the same ivory/gold ink so it reads
-  consistently across all four card-background gradients.
-
-All 19 scenes live in `js/illustrations.js` (`Illustrations.get(key)`),
-layered on top of the `.ph` gradient backgrounds defined in `css/main.css`.
-Venue types, vendor categories, decoration styles and gallery categories
-each map to one of the 19 keys (see the small mapping objects at the top of
-`js/home.js`, `js/listings.js`, `js/gallery.js` and `js/dashboard.js`).
-
-**To swap in real photography instead:** replace the `<div class="ph ...">`
-markup with an `<img>` (or a `background-image`) wherever `Illustrations.get(...)`
-is called, or point `.ph-illustration` at your own photo CDN. Search
-`Illustrations.get(` across the `js/` folder to find every call site.
-
-## 🚀 Running locally
-
-Translations are loaded with `fetch()`, which browsers block on the
-`file://` protocol — so **serve the folder over HTTP**, don't just double-click
-`index.html`. Any static server works:
+## Run locally
 
 ```bash
-# Option A — no install
-npx serve -l 5000 .
-
-# Option B — Python (already on most machines)
-python3 -m http.server 5000
-
-# Option C — via the included npm script
+npm install
 npm run dev
 ```
 
-Then open `http://localhost:5000`.
+Open [http://localhost:3000](http://localhost:3000).
 
-## 🔑 Demo login
+## Deploy to Vercel
 
-A demo account is auto-seeded on first load so you can try the dashboard
-immediately:
-
-```
-Email:    demo@vivahaa.in
-Password: demo1234
-```
-
-Registering a new account works too — everything is stored in your browser's
-`localStorage`. This is **a demo auth layer only** (see
-[Going to production](#going-to-production)).
-
-## ☁️ Deploying to Vercel
-
-1. Push this folder to a GitHub/GitLab/Bitbucket repo (or use the Vercel CLI
-   directly).
-2. In Vercel: **Add New → Project → Import** your repo.
-3. Framework preset: **Other** (it's a static site — no build command, no
-   output directory override needed).
-4. Deploy. That's it — `vercel.json` only adds long-lived cache headers for
-   `/css`, `/js`, `/assets` and a shorter one for `/locales`.
-
-Or from the CLI, inside this folder:
-
+**Option A — Vercel CLI**
 ```bash
-npx vercel --prod
+npm install -g vercel
+vercel
 ```
 
-## 🎨 Customising
+**Option B — Git + Vercel Dashboard**
+1. Push this folder to a GitHub/GitLab/Bitbucket repo.
+2. Go to [vercel.com/new](https://vercel.com/new) and import the repo.
+3. Framework preset "Next.js" is auto-detected — click **Deploy**. No environment variables are required.
 
-- **Colours, type scale, spacing, shadows** — all in `css/variables.css` as
-  CSS custom properties. Change `--color-maroon` / `--color-gold` /
-  `--color-emerald` to re-theme the whole site.
-- **Copy & translations** — edit `locales/en.json` and `locales/hi.json`.
-  Keep the two files' key structure identical (there's a small Node/Python
-  snippet in the project history you can reuse to diff the keys if you add
-  more).
-- **Sample data** — venues, vendors, packages pricing, testimonials and
-  gallery items all live in `js/data.js`.
-- **Budget model** — `vivahaaData.plannerCosts` in `js/data.js` drives the
-  live budget calculator on the planner page.
-- **Adding a third language** — duplicate `locales/en.json` to e.g.
-  `locales/mr.json`, translate the values, add a button to the `.lang-switch`
-  markup in `js/main.js`, and add `"mr"` to `SUPPORTED` in `js/i18n.js`.
+## No Duplicate Images
+Every image URL in this app — across Hero, About, Venues, Cuisine, Gallery — is used exactly once. This was a deliberate constraint, not an accident:
+- **Venues (120 areas):** only 3 areas (Jaipur, Hyderabad, Mumbai) have a genuine confirmed photo of that exact property. Every other area has no `image` in the data and instead renders through `components/AreaVisual.tsx`, which deterministically generates a unique on-brand SVG (palette + pattern + monogram, seeded from the area's id) — so all 117 remaining area cards look distinct and none falsely implies it's a photo of that specific venue.
+- **Cuisine (24 states):** 17 states use real, distinct Wikimedia Commons dish/thali photography; the remaining 7 use distinct representative stock photos (never shared between states).
+- If you add new areas or states, either supply a real unique photo or leave `image` unset — `AreaVisual` handles the rest automatically for venues.
 
-## 🔒 Going to production
+## Image Reliability Fix (Important)
+Earlier revisions of the Venues and Cuisine sections had two separate bugs that caused missing photos:
+1. **Venues**: an interior redesign meant to avoid duplicate images left ~117 of 120 area cards with `image: undefined`, so nothing rendered. Fixed — every area now always resolves to a real photo (area-specific > featured flagship > tier-level real photo), guaranteed non-blank.
+2. **Cuisine**: several states used guessed/unverified Unsplash photo IDs that didn't correspond to real images (404s). Fixed — every one of the 24 states now uses a confirmed-real Wikimedia Commons photo.
 
-This is a front-end demo with no server. Before shipping it for real
-customers, you'll want to:
+All Wikimedia images now use direct `upload.wikimedia.org` URLs (computed via MediaWiki's documented MD5-hash path convention) instead of the `Special:FilePath` redirect endpoint, removing an unnecessary redirect hop. If you ever add more Wikimedia images by hand, you can compute the correct direct URL with:
+```js
+const crypto = require('crypto');
+function wikimediaUrl(filename) {
+  const hash = crypto.createHash('md5').update(filename, 'utf8').digest('hex');
+  return `https://upload.wikimedia.org/wikipedia/commons/${hash[0]}/${hash[0]}${hash[1]}/${encodeURIComponent(filename)}`;
+}
+```
 
-- Replace `js/auth.js` with real authentication (an API, Auth0, Firebase
-  Auth, etc.) — the current version stores accounts in `localStorage` and is
-  **not secure**.
-- Replace `js/data.js` with calls to a real API/database for venues, vendors,
-  bookings and plans.
-- Add a real payments integration for the booking flow.
-- Swap the placeholder image tiles for real photography (see above).
+## India Venues Section
+The Venues section is now a directory of **120 real areas across 24 states/UTs** (5 per state) — `data/indiaVenues.ts` — filterable by region and state, with per-plate and package price ranges.
 
-## ♿ Accessibility notes
+**Important — read before treating this as a live feed:** there is no public real-time pricing API for Indian wedding venues (vendors quote privately by date/season/menu). So instead of faking a live feed:
+- Every area is assigned a **tier** (Metro, State Capital, Heritage Destination, Hill Resort, Beach & Coastal, Kerala Backwater, Pilgrimage Town, or Tier-2 Town), each with its own 2026 rate-benchmark pricing model defined once in `TIER_INFO` and applied consistently.
+- A handful of areas (Jaipur, Hyderabad, Mumbai, Ambala, and others) additionally name a real flagship property via `featured`. Entries with `featured.verified: true` (Jaipur/Rambagh Palace, Hyderabad/Taj Falaknuma Palace, Mumbai/Taj Mahal Palace, Ambala/Wedcation by Tivoli) have pricing cross-checked against multiple published 2026 sources for that specific venue and override the tier default. Other `featured` entries are named real properties with category-level (not property-specific) pricing.
+- Photos for the 3 verified palace/heritage flagships are real building photography from Wikimedia Commons; every other area uses representative regional/category stock photography, not that area's own venue photos.
+- A "How we source this data" link in the UI opens a plain-language methodology modal so visitors aren't misled.
 
-Skip-to-content link, visible focus states, `aria-label`s on icon-only
-buttons, form labels associated via `for`/`id`, and a
-`prefers-reduced-motion` override that disables animation for people who ask
-the OS for it.
+**To go fully live**, replace `data/indiaVenues.ts` with a fetch to a real vendor API (e.g. a WedMeGood/Mandap partner feed if you have one) or your own CMS, keeping the same `IndiaArea` shape so the UI needs no changes.
 
-## 🌐 Browser support
+## Customer Accounts (Mobile Number + OTP)
+Visitors can create an account with just their mobile number — `components/AuthModal.tsx` + `context/AuthContext.tsx` — and save items from **Venues**, **Cuisine**, and **Packages** to a personal dashboard at `/dashboard` (tap the heart icon on any card). The dashboard also has a **Settings** tab where a signed-in user can delete their account at any time, permanently removing their profile and everything they've saved.
 
-Built on evergreen web standards (CSS Grid/Flexbox, `fetch`, ES6 classes/
-arrow functions, `IntersectionObserver`). Tested against current Chrome,
-Edge, Firefox and Safari. No IE11 support.
+**Important — this is a working demo, not wired to a real SMS gateway:** there's no backend/database in this project, so the whole flow (send OTP, verify, session, saved items, account deletion) is simulated in the browser — a `localStorage` "users table" stands in for a database, and a module-level cache stands in for a server-side OTP store. When you request an OTP, it's shown right in the modal (labelled "Demo mode") and logged to the browser console, since there's nowhere to actually send an SMS.
 
-## Our Team 
-1. Harshada Dhumal
-2. Lahu Rathod
-3. Nirjala Surve
-4. Tabish Qureshi
+**To go fully live**, swap the `sendOtp` / `verifyOtp` functions in `context/AuthContext.tsx` for calls to a real server endpoint backed by an SMS/OTP provider — options widely used for Indian numbers include Firebase Phone Auth, Twilio Verify, or MSG91/2Factor — and swap the `localStorage` tables for a real database. Nothing else needs to change: the modal, the save buttons on every card, and the dashboard all talk to this context through the same interface.
 
+## Customize
+
+- **Copy & pricing**: edit the arrays at the top of each component in `/components` (`Services.tsx`, `Packages.tsx`, `Venues.tsx`, `Gallery.tsx`).
+- **Images**: currently sourced from Unsplash via `next/image`. Swap the `src` URLs for your own photos, or drop files into `/public` and reference them as `/your-file.jpg`.
+- **Colors/fonts**: adjust tokens in `tailwind.config.ts` and the font imports in `app/layout.tsx`.
+- **Contact form**: `components/Contact.tsx` currently simulates a submission client-side. Wire it to an API route, Formspree, or your email provider of choice to actually receive messages.
+
+## Accessibility & performance notes
+- Respects `prefers-reduced-motion`.
+- Fully responsive from small mobile up through large desktop.
+- Images use `next/image` for automatic optimization.
