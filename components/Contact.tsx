@@ -36,21 +36,20 @@ export default function Contact() {
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-ivory/10 text-gold-light">
                 <Mail size={18} />
               </span>
-              <span className="font-body text-sm">hello@evermoreandco.com</span>
+              <span className="font-body text-sm">harshadadhumal12@gmail.com</span>
             </div>
             <div className="flex items-center gap-4 text-ivory/80">
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-ivory/10 text-gold-light">
                 <Phone size={18} />
               </span>
-              <span className="font-body text-sm">+1 (212) 555-0148</span>
+              <span className="font-body text-sm">+91 9137217575</span>
             </div>
             <div className="flex items-center gap-4 text-ivory/80">
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-ivory/10 text-gold-light">
                 <MapPin size={18} />
               </span>
               <span className="font-body text-sm">
-                214 Willow Street, Brooklyn, NY
-              </span>
+                Jetking Vashi, Maharashtra ,India              </span>
             </div>
           </div>
         </Reveal>
